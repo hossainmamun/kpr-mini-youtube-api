@@ -46,15 +46,18 @@ const getSingleVideo = async (req, res) => {
 // update video
 const updateVideo = async (req, res) => {
   const { id } = req.params;
-  /* try {
-    const video = await videoModel.findByIdAndUpdate(id);
+  try {
+    const video = await videoModel.findById(id);
     if (!video) {
       res.status(400).json({ error: "video not found in this ID" });
+    } else {
+      Object.assign(video, req.body);
+      video.save();
+      res.status(200).json(video);
     }
-    res.status(200).json(video);
   } catch (err) {
     res.status(400).json({ error: err.message });
-  } */
+  }
 };
 
 // delete video
@@ -64,8 +67,9 @@ const deleteVideo = async (req, res) => {
     const video = await videoModel.findByIdAndDelete(id);
     if (!video) {
       res.status(400).json({ error: "video not found in this ID" });
+    } else {
+      res.status(200).json(video);
     }
-    res.status(200).json(video);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
