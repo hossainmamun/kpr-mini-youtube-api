@@ -9,6 +9,7 @@ const webToken = (id) => {
 // signUp user method
 const signupUser = async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const user = await userModel.signup(email, password);
     const token = webToken(user._id);
